@@ -7,7 +7,8 @@
 # Usage: side_by_side.sh <framesA_dir> <framesB_dir> <out_dir> [tile WxH]
 # Frames are paired by sorted filename order; counts must match.
 set -euo pipefail
-A="${1:?usage: side_by_side.sh <framesA> <framesB> <out>}"; B="${2:?}"; O="${3:?}"
+A="${1:?usage: side_by_side.sh <framesA> <framesB> <out> [tile WxH]}"; B="${2:?}"; O="${3:?}"
+TILE="${4:-5x6}"
 mkdir -p "$O/pairs" "$O/sheets"
 NA=$(ls "$A"/*.png | wc -l); NB=$(ls "$B"/*.png | wc -l)
 [ "$NA" = "$NB" ] || { echo "frame count mismatch: $NA vs $NB" >&2; exit 1; }
@@ -19,7 +20,7 @@ paste <(ls "$A"/*.png) <(ls "$B"/*.png) | while read -r fa fb; do
     "$(printf "$O/pairs/pair_%05d.png" $i)"
 done
 ffmpeg -hide_banner -loglevel error -y -framerate 1 -i "$O/pairs/pair_%05d.png" \
-  -vf "scale=270:-1,tile=5x6" -frames:v 999 "$O/sheets/sbs_%03d.png"
+  -vf "scale=270:-1,tile=$TILE" -frames:v 999 "$O/sheets/sbs_%03d.png"
 echo "sheets: $(ls "$O/sheets" | wc -l) in $O/sheets"
 # numeric drift: mean abs diff over all pairs (downscaled, grey)
 python3 - "$A" "$B" <<'PY'

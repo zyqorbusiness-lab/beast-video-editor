@@ -1,6 +1,8 @@
 // Repo tests. Run: node tests/run-tests.mjs (from repo root)
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, mkdtempSync, mkdirSync, writeFileSync, readdirSync, cpSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 let failures = 0;
 const check = (name, ok) => {
@@ -60,6 +62,51 @@ check('promo end card holds >= 60f of 390', 390 - endAt >= 60);
 check('promo has no wall-clock reads',
   !/Date\.now|performance\.now|requestAnimationFrame/.test(promo));
 check('promo cascade stagger is 3 frames', /\[160,/.test(promo) && /\[163,/.test(promo) && /\[166,/.test(promo));
+
+// 6. preflight.sh enforces the asset ledger (asset-sourcing skill)
+const pf = (dir) => {
+  try { execFileSync('bash', ['tools/preflight.sh', dir], { stdio: 'pipe' }); return 0; }
+  catch (e) { return e.status ?? 1; }
+};
+const t1 = mkdtempSync(join(tmpdir(), 'pf-'));
+mkdirSync(join(t1, 'assets'), { recursive: true });
+writeFileSync(join(t1, 'assets', 'logo.png'), 'x');
+check('preflight fails when a shippable asset has no ledger row', pf(t1) !== 0);
+writeFileSync(join(t1, 'assets', 'ledger.md'),
+  '| Asset | Source URL | Licence | Downloaded | Used at |\n|---|---|---|---|---|\n| logo.png | https://example.com/logo.png | CC0 | 2026-11-19 | n/a |\n');
+check('preflight passes once the ledger row exists', pf(t1) === 0);
+const t2 = mkdtempSync(join(tmpdir(), 'pf-'));
+mkdirSync(join(t2, 'assets'), { recursive: true });
+writeFileSync(join(t2, 'assets', 'ref_audio.wav'), 'x');
+check('preflight exempts analysis-only ref_audio.wav', pf(t2) === 0);
+
+// 7. tool pipeline end-to-end on a synthetic 24fps clip (2s = 48 frames)
+const tw = mkdtempSync(join(tmpdir(), 'pipe-'));
+const clip = join(tw, 'clip.mp4');
+execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y',
+  '-f', 'lavfi', '-i', 'testsrc2=rate=24:size=320x180:duration=2',
+  '-f', 'lavfi', '-i', 'sine=frequency=440:duration=2',
+  '-pix_fmt', 'yuv420p', '-shortest', clip]);
+execFileSync('bash', ['tools/extract_reference.sh', clip, join(tw, 'w')], { stdio: 'pipe' });
+const nRef = readdirSync(join(tw, 'w', 'ref_frames')).filter(f => f.endsWith('.png')).length;
+check('extract_reference.sh defaults to native fps (48 frames from a 24fps clip)', nRef === 48);
+check('extract_reference.sh builds contact sheets',
+  readdirSync(join(tw, 'w', 'contact_sheets')).some(f => f.startsWith('sheet_')));
+execFileSync('python3', ['tools/audio_events.py', join(tw, 'w')], { stdio: 'pipe' });
+check('audio_events.py uses the recorded extraction fps',
+  JSON.parse(readFileSync(join(tw, 'w', 'audio_events.json'), 'utf8')).fps === 24);
+// stand-in render: the extracted frames re-encoded, so counts must match
+mkdirSync(join(tw, 'w', 'render_frames'), { recursive: true });
+for (const f of readdirSync(join(tw, 'w', 'ref_frames')))
+  cpSync(join(tw, 'w', 'ref_frames', f), join(tw, 'w', 'render_frames', f));
+execFileSync('bash', ['tools/encode.sh', join(tw, 'w'), join(tw, 'out.mp4'), '24'], { stdio: 'pipe' });
+check('encode.sh produces an mp4', existsSync(join(tw, 'out.mp4')));
+execFileSync('bash', ['tools/qa_sheets.sh', join(tw, 'out.mp4'), join(tw, 'w')], { stdio: 'pipe' });
+check('qa_sheets.sh builds side-by-side sheets with matching frame counts',
+  readdirSync(join(tw, 'w', 'output')).some(f => f.startsWith('qa_sheet')));
+const sbs = execFileSync('bash', ['tools/side_by_side.sh',
+  join(tw, 'w', 'ref_frames'), join(tw, 'w', 'ref_frames'), join(tw, 'sbs')], { stdio: 'pipe' }).toString();
+check('side_by_side.sh reports identical frames as 100% identical', sbs.includes('identical=100.0%'));
 
 // 5. No reference footage committed anywhere in the tree
 // mixed_audio.wav is a regenerable synthesized artifact (gitignored), not

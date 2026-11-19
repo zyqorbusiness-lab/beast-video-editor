@@ -1,8 +1,9 @@
 # Study: metros.creative - kinetic typography reel
 
 - Reel: https://www.instagram.com/metros.creative/reel/DfFo9D0IZM0/
-- 1080x1920 @ 30fps, 10.97s, 329 frames (all viewed, 6 contact sheets)
-- Audio: 11 onsets, ~40 BPM estimate (sparse, percussive hits)
+- 1080x1920 @ 30fps (native), 10.97s, 329 frames (all viewed, 6 contact sheets)
+- Audio: 11 onsets, ~60.0 BPM estimate (sparse, percussive hits; rough
+  onset-density estimate, not beat-tracked)
 
 ## What it is
 
@@ -17,8 +18,11 @@ A pure kinetic-typography piece. No talking head. Text is the footage.
   (person/object cut out), so type integrates into the scene instead of
   floating on top. This is a layer-order trick: background, text, masked
   subject on top.
-- **A/B cutting at ~0.5s.** Alternating two framings roughly every 15 frames.
-  At 30fps that is a hard 0.5s pulse that reads as energy without chaos.
+- **A/B cutting on a sub-second pulse.** The reel alternates two framings
+  at cut intervals measured between 2 and 18 frames in the fast sections
+  (full segment lengths from the native 30fps extraction: 1-61 frames).
+  The earlier "every 15 frames" figure was a rough eyeball - treat the
+  alternation as a fast, irregular pulse, not a fixed metronome.
 - **Flame / light-flash transitions.** Scene changes ride a warm flash
   (flame frame or light sweep). The flash is 2-4 frames - long enough to
   register, short enough not to read as a dissolve.
@@ -26,9 +30,11 @@ A pure kinetic-typography piece. No talking head. Text is the footage.
 
 ## Numbers worth stealing
 
-- A/B alternation period: ~15 frames @ 30fps (0.5s)
+- A/B alternation: fast sections switch every 2-18 frames @ 30fps
+  (measured on the native extraction; irregular by design)
 - Flash transition length: 2-4 frames
-- Word hold minimum: ~12 frames before the next word lands
+- Word hold minimum: ~12 frames before the next word lands (estimate,
+  not re-measured per word)
 
 ## What this teaches the toolkit
 

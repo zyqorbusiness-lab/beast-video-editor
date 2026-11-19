@@ -8,10 +8,10 @@ PARTIAL (implemented at toolkit level, not exhaustively), DOCUMENTED
 | Brief item | Where in repo | Status |
 |---|---|---|
 | Step 0 environment preflight (ffmpeg/python/node checks) | tools/preflight.sh | DONE (dogfooded) |
-| Step 1 metadata + full frame extraction + labeled frames + 10x6 contact sheets + audio WAV | tools/extract_reference.sh, tools/qa_sheets.sh | DONE (used on 5 reels; label verified on frame F00150) |
-| Step 2 audio analysis (RMS onsets + BPM estimate) | tools/audio_events.py | DONE (run on all 5 reels; BPM labelled estimate) |
+| Step 1 metadata + full frame extraction + labeled frames + 10x6 contact sheets + audio WAV | tools/extract_reference.sh, tools/qa_sheets.sh | DONE (native-fps extraction is the default since 2026-11-19 - no skipped/duplicated frames; all 5 reels re-extracted with counts matching ffprobe; labels verified on frames) |
+| Step 2 audio analysis (RMS onsets + BPM estimate) | tools/audio_events.py | PARTIAL: programmatic RMS onset peaks + rough BPM estimate are done and re-run at native fps on all 5 reels. The brief's full audio log - genre/mood, builds/drops/hits labelled by type, per-SFX frame + trigger, word-level voice timing, mix/levels/ducking/fades - is NOT done: it needs listening and human labelling, and is not automated here |
 | Step 3/3B visual + motion + text deconstruction with exact numbers | skills/reference-deconstruction + docs/reference-analysis/* | PARTIAL: cut periods, holds, staggers, flash lengths measured; per-property bezier/spring extraction for every element is manual guidance, not automated |
-| Step 3C asset inventory | skills/asset-sourcing (ledger) | DOCUMENTED |
+| Step 3C asset inventory + ledger enforcement | skills/asset-sourcing (ledger), tools/preflight.sh | DONE: preflight.sh fails when a shippable file in assets/ has no row in assets/ledger.md (tested in the suite); ref_audio.wav / mixed_audio.wav exempt by design |
 | Step 4 gapless timeline | skills/edit-planning + docs/templates/timeline.md | DONE (template + rule) |
 | Step 5 style breakdown (pacing, animation language, sync rules) | docs/reference-analysis/* per-reel sections | DONE for the 5 studied reels |
 | Step 6 mistakes/drift audit + improvements | skills/qa-and-delivery + tools/side_by_side.sh (numeric mean-abs-diff drift) | DONE (drift dogfooded as determinism proof) |
@@ -35,3 +35,9 @@ PARTIAL (implemented at toolkit level, not exhaustively), DOCUMENTED
    (found in dogfood); a multi-template mode is the follow-up.
 4. Easing fit is best-match among standard families with RMSE, by design;
    exact cubic-bezier recovery stays a human step.
+5. Full audio deconstruction per the brief (Step 2 details above) -
+   onsets are automated, the rest is a listening pass that has not been
+   done for the 5 studied reels.
+6. yunsan and edworld were re-extracted at native 60fps; not every
+   regenerated contact sheet has been re-viewed yet (per-reel viewing
+   status: docs/reference-analysis/00-overview.md).

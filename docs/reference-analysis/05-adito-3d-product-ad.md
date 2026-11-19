@@ -1,10 +1,12 @@
 # Study: madebyadito - 3D motion-graphics product ad
 
 - Reel: https://www.instagram.com/madebyadito/reel/DejPNbqtu4_/
-- 1920x1080 @ 24fps, 27.46s, 824 frames viewed at 30fps sampling
-  (24fps source, so ~1 in 5 sampled frames is a duplicate - noted, not a
-  problem for technique study) (14 sheets)
-- Audio: 47 onsets, ~36.7 BPM estimate (slow, smooth score)
+- 1920x1080 @ 24fps (native), 27.46s, 659 frames extracted at native
+  cadence (11 contact sheets), zero duplicated frames. Originally studied
+  from an 824-frame 30fps sample in which ~1 in 5 frames was a duplicate;
+  re-extracted at 24fps and all 11 sheets re-viewed on 2026-11-19.
+  Numbers marked "measured" come from the native-cadence pass.
+- Audio: 37 onsets, ~46.5 BPM estimate (rough onset-density estimate)
 
 ## What it is
 
@@ -35,9 +37,18 @@ which makes it the export-format contrast case.
 
 ## Numbers worth stealing
 
-- Typewriter cadence: ~3-4 characters per 10 frames at 24fps
-- Card cascade stagger: each card lands ~2-3 frames after the previous
-- Gradient type: one word per ~0.5-0.8s on slow scores
+- Typewriter cadence: measured at native 24fps - about 1-1.6 characters
+  per frame (the 30-character search query "best quality budget
+  headphones" completes in ~19 frames, frames ~356-374; the "It's
+  Deciding" and "What if I told You" typings run at the same ~1
+  char/frame pace). The earlier "~3-4 characters per 10 frames" figure
+  was roughly 4x too slow.
+- Card cascade stagger: cards land about one per frame across frames
+  ~102-110 (counted on the native contact sheet). The earlier "2-3
+  frames" estimate was too slow.
+- End card hold: the white "Bundance" card holds frames 606-659 = 54
+  frames = 2.25s at 24fps (measured).
+- Gradient type: one word per ~0.5-0.8s on slow scores (estimate)
 
 ## What this teaches the toolkit
 

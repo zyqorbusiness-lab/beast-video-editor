@@ -4,11 +4,19 @@
 # matching render frame, and tiles the pairs 5x6 so drift is visible at a glance.
 #
 # Usage: tools/qa_sheets.sh <rendered.mp4> [workspace_dir] [fps]
+# fps defaults to the extraction fps recorded by extract_reference.sh
+# ($workspace/extraction_fps.txt), falling back to 30.
 set -euo pipefail
 
 OUT="${1:?usage: qa_sheets.sh <rendered.mp4> [workspace] [fps]}"
 W="${2:-./recreate_workspace}"
-FPS="${3:-30}"
+if [ "${3:-}" ]; then
+  FPS="$3"
+elif [ -f "$W/extraction_fps.txt" ]; then
+  FPS=$(cat "$W/extraction_fps.txt")
+else
+  FPS=30
+fi
 
 [ -f "$OUT" ] || { echo "no such file: $OUT" >&2; exit 1; }
 [ -d "$W/ref_labeled" ] || { echo "run extract_reference.sh first" >&2; exit 1; }

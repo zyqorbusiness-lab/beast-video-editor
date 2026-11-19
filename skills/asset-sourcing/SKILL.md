@@ -30,13 +30,17 @@ licence that permits the intended use, recorded at pickup time.
 
 ## Asset ledger (required)
 
-Every shippable asset gets a ledger row in the project:
+Every shippable asset gets a ledger row in the project's
+`assets/ledger.md`:
 
 | Asset | Source URL | Licence | Downloaded | Used at |
 |---|---|---|---|---|
 
-No ledger row, no render. `tools/preflight.sh` fails a build whose
-ledger is missing entries for files in `assets/`.
+No ledger row, no render. `tools/preflight.sh` enforces this: it fails
+when a file in `assets/` has no row naming it in `assets/ledger.md`.
+Exempt by design: `ref_audio.wav` (reference audio, analysis only, never
+shipped) and `mixed_audio.wav` (derived output whose sources carry the
+rows). The check is covered by repo tests.
 
 ## Red flags (do not ship)
 

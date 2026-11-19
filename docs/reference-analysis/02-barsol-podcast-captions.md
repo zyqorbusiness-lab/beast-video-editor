@@ -1,7 +1,8 @@
 # Study: barsolmedia - podcast talking-head with caption system
 
 - Reel: https://www.instagram.com/barsolmedia/reel/Dd1Mf7xzsbm/
-- 1080x1920 @ 30fps, 26.77s, 803 frames (all viewed, 14 contact sheets)
+- 1080x1920 @ 30fps (native), 26.77s, 803 frames (all viewed, 14 contact sheets)
+- Audio: 41 onsets, ~62.1 BPM estimate (rough onset-density estimate)
 
 ## What it is
 
@@ -27,10 +28,11 @@ system. The footage is ordinary; the edit is the product.
 
 ## Numbers worth stealing
 
-- Caption pop: scale roughly 1.0 -> 1.15 over ~4 frames, settle in ~3
+- Caption pop: small scale-up over a few frames, then settle (estimate -
+  perceived on contact sheets; per-frame scale values not measured)
 - Emphasis word colour: single accent, italic serif, held for the word's
   spoken duration only
-- Outro hold: 2-3s
+- Outro hold: 2-3s (estimate from contact sheets)
 
 ## What this teaches the toolkit
 

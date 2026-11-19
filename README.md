@@ -1,13 +1,15 @@
 # beast-video-editor
 
 A reference-driven video editing toolkit: deconstruct the best reels
-frame-by-frame, encode their techniques as skills, and rebuild edits
-deterministically from code. Free tools only (Linux/Android), CPU-friendly,
-output that reads hand-made - never AI-generated.
+frame-by-frame at their native cadence, encode their techniques as skills,
+and rebuild edits deterministically from code. Free tools only
+(Linux/Android), CPU-friendly, output that reads hand-made - never
+AI-generated.
 
-Built from real study, not theory: five top reels were deconstructed
-frame-by-frame and every skill cites its evidence. See
-`docs/reference-analysis/`.
+Built from real study, not theory: five top reels were deconstructed from
+native-fps frame extractions (no skipped or duplicated frames) and every
+skill cites its evidence. Per-reel extraction counts and viewing status:
+`docs/reference-analysis/00-overview.md`.
 
 ## What's inside
 
@@ -33,12 +35,15 @@ frame-by-frame and every skill cites its evidence. See
 
 ```bash
 # Requirements: ffmpeg, python3, node 18+
-tools/preflight.sh                    # verify your environment
+tools/preflight.sh                    # verify your environment (+ asset ledger)
 
-# Study a reference
+# Study a reference (extraction defaults to the video's native fps)
 tools/extract_reference.sh reel.mp4 /tmp/study/reel
-tools/audio_events.py /tmp/study/reel/ref_audio.wav
-tools/qa_sheets.sh /tmp/study/reel/ref_labeled
+tools/audio_events.py /tmp/study/reel          # onsets on the extraction timeline
+# ... view every contact sheet in /tmp/study/reel/contact_sheets/ ...
+
+# After rendering your recreation, build side-by-side QA sheets:
+tools/qa_sheets.sh path/to/recreation.mp4 /tmp/study/reel
 
 # Build the demo
 cd examples/kinetic-demo && npm install && npm run render

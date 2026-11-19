@@ -1,20 +1,41 @@
 # Reference Study: Overview
 
 Five reels from the owner's edit-reference-kit (release v1.0) were deconstructed
-frame-by-frame as the ground truth for this toolkit's skills. Every claim in the
-per-reel files comes from viewing labeled frame extractions (every frame at the
-reel's native cadence, frame number + timestamp burned in) assembled into
-contact sheets, plus an audio onset analysis (`tools/audio_events.py`).
+as the ground truth for this toolkit's skills. Every claim in the per-reel
+files comes from viewing labeled frame extractions assembled into contact
+sheets, plus an audio onset analysis (`tools/audio_events.py`).
 
-| Study | Creator | Reel | Format | Duration | Frames studied | Audio peaks |
-|---|---|---|---|---|---|---|
-| metros | @metros.creative | https://www.instagram.com/metros.creative/reel/DfFo9D0IZM0/ | 1080x1920 @ 30fps | 10.97s | 329 | 11 onsets (~40 BPM est.) |
-| barsol | @barsolmedia | https://www.instagram.com/barsolmedia/reel/Dd1Mf7xzsbm/ | 1080x1920 @ 30fps | 26.77s | 803 | (onset map on file) |
-| edworld | @editingworld8755 | https://www.instagram.com/editingworld8755/reel/DZgzUHxSLBG/ | 1080x1920 @ 60fps | 23.00s | 690 (30fps sample) | 40 onsets (~200 BPM est.) |
-| yunsan | @yunsan_studio | https://www.instagram.com/yunsan_studio/reel/DfSwqnwTlCg/ | 1080x1920 @ 60fps | 17.88s | 537 (30fps sample) | 30 onsets (~112.5 BPM est.) |
-| adito | @madebyadito | https://www.instagram.com/madebyadito/reel/DejPNbqtu4_/ | 1920x1080 @ 24fps | 27.46s | 824 (30fps sample, duplicates) | 47 onsets (~36.7 BPM est.) |
+**Extraction rule (fixed 2026-11-19):** frames are extracted at each reel's
+NATIVE fps, so no source frame is skipped or duplicated. An earlier pass
+sampled everything at 30fps, which dropped motion detail from the two 60fps
+reels and duplicated frames on the 24fps reel; the affected reels were
+re-extracted and re-studied on 2026-11-19 with the counts below.
 
-The BPM figures are rough onset-density estimates, not beat-tracked values.
+| Study | Creator | Reel | Format | Duration | Frames (native) | Sheets | Audio onsets | BPM (rough est.) |
+|---|---|---|---|---|---|---|---|---|
+| metros | @metros.creative | https://www.instagram.com/metros.creative/reel/DfFo9D0IZM0/ | 1080x1920 @ 30fps (native) | 10.97s | 329 | 6 | 11 | ~60.0 |
+| barsol | @barsolmedia | https://www.instagram.com/barsolmedia/reel/Dd1Mf7xzsbm/ | 1080x1920 @ 30fps (native) | 26.77s | 803 | 14 | 41 | ~62.1 |
+| edworld | @editingworld8755 | https://www.instagram.com/editingworld8755/reel/DZgzUHxSLBG/ | 1080x1920 @ 60fps (native) | 23.00s | 1380 | 23 | 63 | ~83.7 |
+| yunsan | @yunsan_studio | https://www.instagram.com/yunsan_studio/reel/DfSwqnwTlCg/ | 1080x1920 @ 60fps (native) | 17.88s | 1073 | 18 | 52 | ~150.0 |
+| adito | @madebyadito | https://www.instagram.com/madebyadito/reel/DejPNbqtu4_/ | 1920x1080 @ 24fps (native) | 27.46s | 659 | 11 | 37 | ~46.5 |
+
+Frame counts are the extracted PNG counts from `tools/extract_reference.sh`
+and match each file's `ffprobe` nb_frames exactly (verified 2026-11-19).
+Onset counts and BPM come from `tools/audio_events.py` run on each reel's
+audio at its native fps; BPM is a rough onset-density estimate, not a
+beat-tracked value.
+
+## Viewing status (honest, per reel)
+
+- **metros** - all 6 sheets viewed (30fps study; unchanged, native = 30fps).
+- **barsol** - all 14 sheets viewed (30fps study; unchanged, native = 30fps).
+- **adito** - all 11 sheets re-viewed at native 24fps on 2026-11-19. Numbers
+  in the study marked "measured" come from this pass.
+- **yunsan** - re-extracted at native 60fps; sheets 1, 17, 18 and full frames
+  120-840 (margin measurement) re-viewed. Remaining sheets not yet re-viewed;
+  the scene inventory below comes from the earlier 30fps-sample study.
+- **edworld** - re-extracted at native 60fps; sheets 1, 17, 23 re-viewed.
+  Remaining sheets not yet re-viewed; scene inventory from the earlier study.
 
 ## Why these five
 
@@ -35,8 +56,8 @@ They cover five distinct craft families this toolkit must teach:
   picks one accent and spends it only on emphasis words and key graphics.
 - **Flash transitions on cuts.** White/colour flashes and light sweeps happen
   at scene changes, never mid-shot and never on text entrances.
-- **A held end card.** Every reel ends with a static branded card held 2-3s+
-  (logo, socials, or "REACH US"). The hold is part of the craft.
+- **A held end card.** Every reel ends with a branded card (logo, socials,
+  or "REACH US"). Measured holds are in the per-reel studies.
 - **Masked subject pop-outs.** edworld and barsol both cut the subject out of
   the frame and layer it over graphics - the single most recurring
   "premium" move in talking-head work.

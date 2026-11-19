@@ -1,8 +1,14 @@
 # Study: editingworld8755 - Raw vs Edit showcase
 
 - Reel: https://www.instagram.com/editingworld8755/reel/DZgzUHxSLBG/
-- 1080x1920 @ 60fps, 23.00s, 690 frames viewed at 30fps sampling (12 sheets)
-- Audio: 40 onsets, ~200 BPM estimate (dense, high-energy track)
+- 1080x1920 @ 60fps (native), 23.00s, 1380 frames extracted at native
+  cadence (23 contact sheets). Originally studied from a 690-frame 30fps
+  sample; re-extracted at 60fps on 2026-11-19. Sheets 1, 17 and 23
+  re-viewed at native cadence; the scene inventory below comes from the
+  earlier full viewing of the 30fps sample.
+- Audio: 63 onsets, ~83.7 BPM estimate (rough onset-density estimate;
+  the earlier ~200 BPM figure came from the 30fps-sampled run and was
+  not reliable)
 
 ## What it is
 
@@ -32,6 +38,8 @@ used as proof of skill. Orange is the brand accent.
 - Showcase structure: hook (brand world) -> raw -> edit -> breakdown -> CTA
 - Two-accent discipline: brand accent (orange) + system accent (green),
   never mixed in the same element
+- Full-frame flash transition measured at native cadence: 4 frames
+  (frames 966-969 at 60fps, detected as a bright full-frame run)
 
 ## What this teaches the toolkit
 

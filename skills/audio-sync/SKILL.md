@@ -24,7 +24,7 @@ Tool: `tools/audio_events.py <audio.wav>` -> onset times + rough BPM.
 
 ## Density sanity check
 
-Compare your event density to the reference class: ~40 BPM (sparse,
-metros) to ~200 BPM (dense, edworld) both work - but a mid-energy track
-with sparse cuts feels asleep, and a dense track with slow cuts feels
-dragged. Match density to the track.
+Compare your event density to the reference class: ~46 BPM (slow, adito)
+to ~150 BPM (dense, yunsan) both work - but a mid-energy track with sparse
+cuts feels asleep, and a dense track with slow cuts feels dragged. Match
+density to the track. (All BPM figures are rough onset-density estimates.)

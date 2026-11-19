@@ -10,14 +10,17 @@ Never recreate from vibes. Measure first, then build.
 ## Pipeline
 
 1. **Probe**: `ffprobe` the reference for resolution, fps, duration, codec.
-   Note when fps is below 30 (30fps extraction duplicates frames) or above
-   (30fps sampling drops motion detail) - say which you did.
 2. **Extract labeled frames**: `tools/extract_reference.sh <video> <outdir>`
-   burns `F00001 | 00:00:00.033` onto every frame so every observation is
+   extracts EVERY frame at the native fps by default (never skip a frame;
+   pass an explicit fps only for a deliberate, labelled sample) and burns
+   `F00001 | 00:00:00.033` onto every frame so every observation is
    citable by frame number.
-3. **Contact sheets**: `tools/qa_sheets.sh <frames_dir>` builds 10x6 sheets.
-   View every sheet. Skipping sheets is how mid-reel techniques get missed
-   (barsol's colour-block punch is in one 2-second window).
+3. **Contact sheets**: the same script tiles the labeled frames into 10x6
+   sheets in `<outdir>/contact_sheets/`. View every sheet. Skipping sheets
+   is how mid-reel techniques get missed (barsol's colour-block punch is
+   in one 2-second window). After a recreation render exists,
+   `tools/qa_sheets.sh <rendered.mp4> <outdir>` builds the side-by-side
+   [reference | recreation] QA sheets.
 4. **Audio events**: `tools/audio_events.py <audio.wav>` produces onset
    times and a rough BPM estimate. Mark the estimate as rough.
 5. **Measure motion**: `tools/motion_measure.py <frames> --template

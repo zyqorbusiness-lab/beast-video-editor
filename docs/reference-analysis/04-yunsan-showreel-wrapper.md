@@ -1,8 +1,12 @@
 # Study: yunsan_studio - branded showreel wrapper
 
 - Reel: https://www.instagram.com/yunsan_studio/reel/DfSwqnwTlCg/
-- 1080x1920 @ 60fps, 17.88s, 537 frames viewed at 30fps sampling (9 sheets)
-- Audio: 30 onsets, ~112.5 BPM estimate
+- 1080x1920 @ 60fps (native), 17.88s, 1073 frames extracted at native
+  cadence (18 contact sheets). Originally studied from a 537-frame 30fps
+  sample; re-extracted at 60fps on 2026-11-19. Sheets 1, 17, 18 and full
+  frames 120-840 re-viewed; the scene inventory below comes from the
+  earlier full viewing of the 30fps sample.
+- Audio: 52 onsets, ~150.0 BPM estimate (rough onset-density estimate)
 
 ## What it is
 
@@ -31,9 +35,15 @@ wrapper is the lesson: the same footage would feel disposable without it.
 
 ## Numbers worth stealing
 
-- Wrapper margins: the inner video window occupies roughly 80-85% of frame
-  width, centred, with consistent corner radius
-- End card hold: well over 3s (the reel ends on it)
+- Wrapper margins: measured at native cadence on 5 frames (120, 300, 480,
+  660, 840): the inner video window spans 95.5-95.7% of frame width at
+  mid-height (~20px side margins on 1080), centred, with consistent
+  corner radius. The earlier "80-85%" eyeball was wrong.
+- End card: the "REACH US" card's entrance transition begins ~frame 936;
+  the card is fully on screen by ~frame 1000 and held through frame 1073
+  (74 frames = 1.23s at 60fps). The pink sunburst background keeps
+  animating slowly during the hold. The earlier "well over 3s" figure
+  was an over-estimate.
 
 ## What this teaches the toolkit
 

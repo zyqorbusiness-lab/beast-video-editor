@@ -29,5 +29,6 @@ composition is component-complex. Same rule: all motion derives from
 - Assets are pinned in the ledger (asset-sourcing). A re-render with the
   same plan and ledger produces identical bytes.
 - 2.5D fakes over real 3D on CPU-only boxes (see motion-graphics).
-- Export via `tools/encode.sh`: libx264, crf 18, yuv420p, native fps,
-  faststart. Vertical sources stay 1080x1920; do not letterbox.
+- Export via `tools/encode.sh`: libx264, crf 16, yuv420p, native fps,
+  faststart (same settings as the brief's encode step). Vertical sources
+  stay 1080x1920; do not letterbox.

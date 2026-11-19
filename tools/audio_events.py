@@ -21,14 +21,21 @@ import numpy as np
 
 def main() -> None:
     workspace = sys.argv[1] if len(sys.argv) > 1 else "./recreate_workspace"
-    fps = int(sys.argv[2]) if len(sys.argv) > 2 else 30
     if workspace.lower().endswith(".wav"):
         # direct WAV path: events json lands next to it, fps from arg 2
         wav_path = workspace
         out_path = wav_path.rsplit(".", 1)[0] + "_events.json"
+        default_fps = 30
     else:
         wav_path = f"{workspace}/assets/ref_audio.wav"
         out_path = f"{workspace}/audio_events.json"
+        # default to the extraction fps recorded by extract_reference.sh
+        try:
+            with open(f"{workspace}/extraction_fps.txt") as fh:
+                default_fps = int(float(fh.read().strip()))
+        except OSError:
+            default_fps = 30
+    fps = int(sys.argv[2]) if len(sys.argv) > 2 else default_fps
 
     with wave.open(wav_path, "rb") as wf:
         sr, ch = wf.getframerate(), wf.getnchannels()
@@ -50,10 +57,13 @@ def main() -> None:
         if energy[i] > threshold and energy[i] > energy[i - 1] and energy[i] >= energy[i + 1]
     ]
 
-    # Rough BPM from onset autocorrelation (search 2..0.5 beat/sec window).
+    # Rough BPM from onset autocorrelation. The search window is defined in
+    # BPM (40..240) and converted to frames, so the estimate is meaningful at
+    # any extraction fps.
     onsets = np.maximum(np.diff(energy), 0)
     ac = np.correlate(onsets, onsets, "full")[len(onsets) - 1 :]
-    lo, hi = 8, min(60, len(ac) - 1)
+    lo = max(2, int(60 * fps / 240))
+    hi = min(int(60 * fps / 40), len(ac) - 1)
     bpm = None
     if hi > lo and ac[lo:hi].size:
         lag = int(np.argmax(ac[lo:hi]) + lo)
