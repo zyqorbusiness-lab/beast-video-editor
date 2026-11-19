@@ -5,7 +5,7 @@ Nothing below is claimed beyond the check listed.
 
 ## Verified (run locally, Nov 19 2026)
 
-- **Test suite**: `node tests/run-tests.mjs` - 51 checks, all passing
+- **Test suite**: `node tests/run-tests.mjs` - 55 checks, all passing
   (count from the actual run output). Covers: tool scripts present, all
   10 skills present with frontmatter, demo beat-sheet timing rules (12f
   word gaps, 2-4f flash, >=60f end-card hold, no wall-clock reads),
@@ -77,7 +77,7 @@ Nothing below is claimed beyond the check listed.
 
 ## CI
 
-- Workflow: `.github/workflows/test.yml` runs the 51-check suite plus a
+- Workflow: `.github/workflows/test.yml` runs the 55-check suite plus a
   real demo render smoke test (ffmpeg + chromium render + ffprobe).
 - Run 44499109024 on commit d0772c5: every step green
   (https://github.com/zyqorbusiness-lab/beast-video-editor/actions/runs/44499109024).

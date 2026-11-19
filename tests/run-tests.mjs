@@ -29,7 +29,7 @@ for (const s of skills) {
 
 // 2b. CLI argument contracts: each tool rejects a no-arg run with its own
 // usage line, and the script's "# Usage:" header comment carries the same
-// signature - so the docs and the parser can never silently drift apart.
+// signature - any drift between the docs and the parser fails this suite.
 const contracts = {
   'tools/extract_reference.sh': 'extract_reference.sh <reference.mp4> [workspace_dir] [fps]',
   'tools/qa_sheets.sh': 'qa_sheets.sh <rendered.mp4> [workspace_dir] [fps]',
@@ -135,6 +135,30 @@ check('qa_sheets.sh builds side-by-side sheets with matching frame counts',
 const sbs = execFileSync('bash', ['tools/side_by_side.sh',
   join(tw, 'w', 'ref_frames'), join(tw, 'w', 'ref_frames'), join(tw, 'sbs')], { stdio: 'pipe' }).toString();
 check('side_by_side.sh reports identical frames as 100% identical', sbs.includes('identical=100.0%'));
+
+// Optional-argument paths of the same contracts, exercised with real runs:
+// extract_reference.sh [fps]: 12fps sample of the 24fps clip -> 24 frames
+const tws = mkdtempSync(join(tmpdir(), 'pipe-fps-'));
+execFileSync('bash', ['tools/extract_reference.sh', clip, join(tws, 'w'), '12'], { stdio: 'pipe' });
+check('extract_reference.sh honors explicit fps arg (12fps -> 24 frames)',
+  readdirSync(join(tws, 'w', 'ref_frames')).filter(f => f.endsWith('.png')).length === 24);
+// encode.sh [audio.wav]: explicit audio file instead of the workspace default
+const tone = join(tw, 'tone.wav');
+execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y',
+  '-f', 'lavfi', '-i', 'sine=frequency=330:duration=1', tone]);
+execFileSync('bash', ['tools/encode.sh', join(tw, 'w'), join(tw, 'out-audio.mp4'), '24', tone], { stdio: 'pipe' });
+const hasAudio = execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'a',
+  '-show_entries', 'stream=codec_type', '-of', 'csv=p=0', join(tw, 'out-audio.mp4')]).toString().trim();
+check('encode.sh honors explicit audio arg (audio stream present)', hasAudio === 'audio');
+// qa_sheets.sh [fps]: explicit fps instead of extraction_fps.txt
+execFileSync('bash', ['tools/qa_sheets.sh', join(tw, 'out.mp4'), join(tw, 'w'), '24'], { stdio: 'pipe' });
+check('qa_sheets.sh honors explicit fps arg (sheets still built)',
+  readdirSync(join(tw, 'w', 'output')).some(f => f.startsWith('qa_sheet')));
+// side_by_side.sh [tile WxH]: 2x3 tiling puts 6 pairs per sheet -> 48 pairs = 8 sheets
+execFileSync('bash', ['tools/side_by_side.sh',
+  join(tw, 'w', 'ref_frames'), join(tw, 'w', 'ref_frames'), join(tw, 'sbs-tile'), '2x3'], { stdio: 'pipe' });
+check('side_by_side.sh honors tile arg (2x3 -> 8 sheets from 48 pairs)',
+  readdirSync(join(tw, 'sbs-tile', 'sheets')).filter(f => f.endsWith('.png')).length === 8);
 
 // 5. No reference footage committed anywhere in the tree
 // mixed_audio.wav is a regenerable synthesized artifact (gitignored), not
