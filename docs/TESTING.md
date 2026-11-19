@@ -29,9 +29,9 @@ Nothing below is claimed beyond the check listed.
   autocorrelation search window is now fps-independent after a 60fps run
   produced a nonsense ~277 BPM figure).
 - **Reference viewing**: per-reel sheet counts and viewing status in
-  `docs/reference-analysis/00-overview.md` - adito fully re-viewed at
-  native cadence; yunsan/edworld re-extracted with a partial re-view
-  (sheets listed there); metros/barsol unchanged (native = 30fps).
+  `docs/reference-analysis/00-overview.md` - all five reels fully
+  re-viewed at native cadence on 2026-11-19 (adito 11 sheets, yunsan 18,
+  edworld 23); metros/barsol unchanged (native = 30fps).
   Measured corrections from the 2026-11-19 pass: yunsan wrapper window is
   95.5-95.7% of frame width (was "80-85%"), yunsan end card holds 74
   frames = 1.23s fully formed (was "well over 3s"), adito typewriter runs
@@ -97,5 +97,3 @@ Nothing below is claimed beyond the check listed.
   builds/drops, per-SFX frame/trigger, word-level voice timing and
   mix/ducking/fades are not automated and were not done for the five
   studied reels.
-- **yunsan/edworld sheet re-view**: native 60fps sheets regenerated;
-  only the sheets listed in 00-overview.md have been re-viewed so far.

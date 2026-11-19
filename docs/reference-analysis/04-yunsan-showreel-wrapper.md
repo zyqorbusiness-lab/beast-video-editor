@@ -3,9 +3,8 @@
 - Reel: https://www.instagram.com/yunsan_studio/reel/DfSwqnwTlCg/
 - 1080x1920 @ 60fps (native), 17.88s, 1073 frames extracted at native
   cadence (18 contact sheets). Originally studied from a 537-frame 30fps
-  sample; re-extracted at 60fps on 2026-11-19. Sheets 1, 17, 18 and full
-  frames 120-840 re-viewed; the scene inventory below comes from the
-  earlier full viewing of the 30fps sample.
+  sample; re-extracted at 60fps on 2026-11-19 and all 18 sheets
+  re-viewed at native cadence on 2026-11-19.
 - Audio: 52 onsets, ~150.0 BPM estimate (rough onset-density estimate)
 
 ## What it is

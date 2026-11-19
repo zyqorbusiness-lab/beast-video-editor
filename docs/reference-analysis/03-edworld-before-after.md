@@ -3,9 +3,8 @@
 - Reel: https://www.instagram.com/editingworld8755/reel/DZgzUHxSLBG/
 - 1080x1920 @ 60fps (native), 23.00s, 1380 frames extracted at native
   cadence (23 contact sheets). Originally studied from a 690-frame 30fps
-  sample; re-extracted at 60fps on 2026-11-19. Sheets 1, 17 and 23
-  re-viewed at native cadence; the scene inventory below comes from the
-  earlier full viewing of the 30fps sample.
+  sample; re-extracted at 60fps on 2026-11-19 and all 23 sheets
+  re-viewed at native cadence on 2026-11-19.
 - Audio: 63 onsets, ~83.7 BPM estimate (rough onset-density estimate;
   the earlier ~200 BPM figure came from the 30fps-sampled run and was
   not reliable)

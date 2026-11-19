@@ -38,6 +38,3 @@ PARTIAL (implemented at toolkit level, not exhaustively), DOCUMENTED
 5. Full audio deconstruction per the brief (Step 2 details above) -
    onsets are automated, the rest is a listening pass that has not been
    done for the 5 studied reels.
-6. yunsan and edworld were re-extracted at native 60fps; not every
-   regenerated contact sheet has been re-viewed yet (per-reel viewing
-   status: docs/reference-analysis/00-overview.md).

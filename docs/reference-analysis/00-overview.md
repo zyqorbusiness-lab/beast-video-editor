@@ -31,11 +31,12 @@ beat-tracked value.
 - **barsol** - all 14 sheets viewed (30fps study; unchanged, native = 30fps).
 - **adito** - all 11 sheets re-viewed at native 24fps on 2026-11-19. Numbers
   in the study marked "measured" come from this pass.
-- **yunsan** - re-extracted at native 60fps; sheets 1, 17, 18 and full frames
-  120-840 (margin measurement) re-viewed. Remaining sheets not yet re-viewed;
-  the scene inventory below comes from the earlier 30fps-sample study.
-- **edworld** - re-extracted at native 60fps; sheets 1, 17, 23 re-viewed.
-  Remaining sheets not yet re-viewed; scene inventory from the earlier study.
+- **yunsan** - re-extracted at native 60fps; all 18 sheets re-viewed at
+  native cadence on 2026-11-19. Numbers in the study marked "measured"
+  come from this pass.
+- **edworld** - re-extracted at native 60fps; all 23 sheets re-viewed at
+  native cadence on 2026-11-19. Scene inventory confirmed against the
+  native-cadence sheets.
 
 ## Why these five
 
