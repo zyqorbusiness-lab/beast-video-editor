@@ -8,7 +8,7 @@
 # ($workspace/extraction_fps.txt), falling back to 30.
 set -euo pipefail
 
-OUT="${1:?usage: qa_sheets.sh <rendered.mp4> [workspace] [fps]}"
+OUT="${1:?usage: qa_sheets.sh <rendered.mp4> [workspace_dir] [fps]}"
 W="${2:-./recreate_workspace}"
 if [ "${3:-}" ]; then
   FPS="$3"

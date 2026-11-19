@@ -42,8 +42,14 @@ tools/extract_reference.sh reel.mp4 /tmp/study/reel
 tools/audio_events.py /tmp/study/reel          # onsets on the extraction timeline
 # ... view every contact sheet in /tmp/study/reel/contact_sheets/ ...
 
+# Encode frames + mixed audio into the delivery MP4:
+tools/encode.sh recreate_workspace delivery.mp4 30 recreate_workspace/assets/mixed_audio.wav
+
 # After rendering your recreation, build side-by-side QA sheets:
 tools/qa_sheets.sh path/to/recreation.mp4 /tmp/study/reel
+
+# Pair reference and render frames directly (determinism proof on re-renders):
+tools/side_by_side.sh /tmp/study/reel/ref_frames recreate_workspace/render_frames /tmp/qa
 
 # Build the demo
 cd examples/kinetic-demo && npm install && npm run render

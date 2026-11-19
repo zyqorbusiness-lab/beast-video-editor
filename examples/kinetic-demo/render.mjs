@@ -33,7 +33,7 @@ await browser.close();
 
 execFileSync('ffmpeg', [
   '-y', '-framerate', String(FPS), '-i', 'out/frames/F%05d.png',
-  '-c:v', 'libx264', '-crf', '18', '-pix_fmt', 'yuv420p',
+  '-c:v', 'libx264', '-crf', '16', '-pix_fmt', 'yuv420p',
   '-movflags', '+faststart', 'out/kinetic-demo.mp4',
 ], { stdio: 'inherit' });
 console.log('wrote out/kinetic-demo.mp4');

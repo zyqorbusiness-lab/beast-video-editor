@@ -9,8 +9,8 @@
 # Env:   BLEND=1  blend a 2x-fps render down to fps
 set -euo pipefail
 
-W="${1:?usage: encode.sh <workspace> <out.mp4> [fps] [audio.wav]}"
-OUT="${2:?usage: encode.sh <workspace> <out.mp4> [fps] [audio.wav]}"
+W="${1:?usage: encode.sh <workspace_dir> <out.mp4> [fps] [audio.wav]}"
+OUT="${2:?usage: encode.sh <workspace_dir> <out.mp4> [fps] [audio.wav]}"
 FPS="${3:-30}"
 AUDIO="${4:-$W/assets/mixed_audio.wav}"
 

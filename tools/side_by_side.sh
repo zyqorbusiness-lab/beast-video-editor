@@ -4,10 +4,12 @@
 # prints a per-pair mean-abs-difference (0.0 = pixel identical; use it to
 # prove determinism on re-renders, never to claim a recreation "matches").
 #
-# Usage: side_by_side.sh <framesA_dir> <framesB_dir> <out_dir> [tile WxH]
+# Usage: tools/side_by_side.sh <framesA_dir> <framesB_dir> <out_dir> [tile WxH]
 # Frames are paired by sorted filename order; counts must match.
 set -euo pipefail
-A="${1:?usage: side_by_side.sh <framesA> <framesB> <out> [tile WxH]}"; B="${2:?}"; O="${3:?}"
+A="${1:?usage: side_by_side.sh <framesA_dir> <framesB_dir> <out_dir> [tile WxH]}"
+B="${2:?usage: side_by_side.sh <framesA_dir> <framesB_dir> <out_dir> [tile WxH]}"
+O="${3:?usage: side_by_side.sh <framesA_dir> <framesB_dir> <out_dir> [tile WxH]}"
 TILE="${4:-5x6}"
 mkdir -p "$O/pairs" "$O/sheets"
 NA=$(ls "$A"/*.png | wc -l); NB=$(ls "$B"/*.png | wc -l)

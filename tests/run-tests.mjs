@@ -27,6 +27,34 @@ for (const s of skills) {
     existsSync(p) && readFileSync(p, 'utf8').startsWith('---'));
 }
 
+// 2b. CLI argument contracts: each tool rejects a no-arg run with its own
+// usage line, and the script's "# Usage:" header comment carries the same
+// signature - so the docs and the parser can never silently drift apart.
+const contracts = {
+  'tools/extract_reference.sh': 'extract_reference.sh <reference.mp4> [workspace_dir] [fps]',
+  'tools/qa_sheets.sh': 'qa_sheets.sh <rendered.mp4> [workspace_dir] [fps]',
+  'tools/encode.sh': 'encode.sh <workspace_dir> <out.mp4> [fps] [audio.wav]',
+  'tools/side_by_side.sh': 'side_by_side.sh <framesA_dir> <framesB_dir> <out_dir> [tile WxH]',
+};
+for (const [script, sig] of Object.entries(contracts)) {
+  let stderr = '', code = 0;
+  try { execFileSync('bash', [script], { stdio: 'pipe' }); }
+  catch (e) { code = e.status; stderr = (e.stderr || '').toString(); }
+  check(`${script} rejects no-arg run with its usage contract`,
+    code !== 0 && stderr.includes(`usage: ${sig}`));
+  const usageLine = readFileSync(script, 'utf8').split('\n')
+    .find(l => l.startsWith('# Usage:')) || '';
+  check(`${script} usage comment matches its error contract`,
+    usageLine.includes(sig));
+}
+
+// 2c. Demo encoders must match the encode.sh / brief export contract (crf 16)
+for (const [name, f] of [['kinetic-demo', 'examples/kinetic-demo/render.mjs'],
+                         ['promo-demo', 'examples/promo-demo/render.mjs']]) {
+  check(`${name} encodes at crf 16 (encode.sh / brief contract)`,
+    /'-crf',\s*'16'/.test(readFileSync(f, 'utf8')));
+}
+
 // 3. Demo beat sheet obeys the measured timing rules
 const html = readFileSync('examples/kinetic-demo/composition.html', 'utf8');
 const beats = [...html.matchAll(/\[\s*(\d+),\s*'([^']+)'/g)]

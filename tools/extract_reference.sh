@@ -16,7 +16,7 @@
 # Usage: tools/extract_reference.sh <reference.mp4> [workspace_dir] [fps]
 set -euo pipefail
 
-REF="${1:?usage: extract_reference.sh <video> [workspace] [fps]}"
+REF="${1:?usage: extract_reference.sh <reference.mp4> [workspace_dir] [fps]}"
 W="${2:-./recreate_workspace}"
 
 [ -f "$REF" ] || { echo "no such file: $REF" >&2; exit 1; }

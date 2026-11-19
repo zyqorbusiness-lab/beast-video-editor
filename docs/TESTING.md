@@ -5,7 +5,7 @@ Nothing below is claimed beyond the check listed.
 
 ## Verified (run locally, Nov 19 2026)
 
-- **Test suite**: `node tests/run-tests.mjs` - 41 checks, all passing
+- **Test suite**: `node tests/run-tests.mjs` - 51 checks, all passing
   (count from the actual run output). Covers: tool scripts present, all
   10 skills present with frontmatter, demo beat-sheet timing rules (12f
   word gaps, 2-4f flash, >=60f end-card hold, no wall-clock reads),
@@ -31,7 +31,10 @@ Nothing below is claimed beyond the check listed.
 - **Reference viewing**: per-reel sheet counts and viewing status in
   `docs/reference-analysis/00-overview.md` - all five reels fully
   re-viewed at native cadence on 2026-11-19 (adito 11 sheets, yunsan 18,
-  edworld 23); metros/barsol unchanged (native = 30fps).
+  edworld 23); metros/barsol unchanged (native = 30fps). These are
+  Instinct-reported observations: the reels and contact sheets are not in
+  the repo, so they cannot be independently reproduced from the public
+  repo alone.
   Measured corrections from the 2026-11-19 pass: yunsan wrapper window is
   95.5-95.7% of frame width (was "80-85%"), yunsan end card holds 74
   frames = 1.23s fully formed (was "well over 3s"), adito typewriter runs
@@ -74,7 +77,7 @@ Nothing below is claimed beyond the check listed.
 
 ## CI
 
-- Workflow: `.github/workflows/test.yml` runs the 41-check suite plus a
+- Workflow: `.github/workflows/test.yml` runs the 51-check suite plus a
   real demo render smoke test (ffmpeg + chromium render + ffprobe).
 - Run 44499109024 on commit d0772c5: every step green
   (https://github.com/zyqorbusiness-lab/beast-video-editor/actions/runs/44499109024).

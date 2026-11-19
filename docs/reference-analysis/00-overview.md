@@ -20,12 +20,18 @@ re-extracted and re-studied on 2026-11-19 with the counts below.
 | adito | @madebyadito | https://www.instagram.com/madebyadito/reel/DejPNbqtu4_/ | 1920x1080 @ 24fps (native) | 27.46s | 659 | 11 | 37 | ~46.5 |
 
 Frame counts are the extracted PNG counts from `tools/extract_reference.sh`
-and match each file's `ffprobe` nb_frames exactly (verified 2026-11-19).
+and matched each file's `ffprobe` nb_frames exactly when measured 2026-11-19.
+
+**Provenance (honest):** the counts, sheet views and measured observations in
+this directory are Instinct-reported. The source reels, extracted frames and
+contact sheets are NOT in this repo (licensing posture, see `docs/LICENSING.md`),
+so these numbers cannot be independently reproduced from the public repo
+alone - they record what was measured during the 2026-11-19 build session.
 Onset counts and BPM come from `tools/audio_events.py` run on each reel's
 audio at its native fps; BPM is a rough onset-density estimate, not a
 beat-tracked value.
 
-## Viewing status (honest, per reel)
+## Viewing status (honest, per reel; Instinct-reported)
 
 - **metros** - all 6 sheets viewed (30fps study; unchanged, native = 30fps).
 - **barsol** - all 14 sheets viewed (30fps study; unchanged, native = 30fps).
