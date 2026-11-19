@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  /* promo-demo: original 13s promo exercising colour + motion + audio sync.
+     Palette (skills/colour-theory): bg #0A0A0C, brand accent #FF7A1A,
+     system accent #3DD68C (active word only), neutrals free.
+     Beat sheet (skills/edit-planning), 30fps:
+       f0-149  hook: word-by-word "Hand made motion" on kicks (f0,15,30)
+       f150    3f white flash + impact (audio onset 5.000s)
+       f150-159 spotlight reveal (radius 0->full)
+       f160-168 card cascade: PLAN/BUILD/SHIP land 3f apart
+       f330    impact (11.000s) -> end card (orange block), hold 60f
+  */
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden;
+    background: #0A0A0C; }
+  #stage { position: relative; width: 1080px; height: 1920px; }
+  .word { position: absolute; left: 0; right: 0; text-align: center; }
+  .sans { font-family: 'DejaVu Sans', Arial, sans-serif; font-weight: 900; }
+  .serif { font-family: Georgia, serif; font-style: italic; }
+  #spot { position: absolute; inset: 0; background: #0A0A0C; z-index: 5;
+    pointer-events: none; display: none; }
+  #flash { position: absolute; inset: 0; background: #fff; opacity: 0;
+    z-index: 10; }
+  .card { position: absolute; width: 760px; height: 300px; left: 160px;
+    border-radius: 32px; display: flex; align-items: center;
+    justify-content: center; font-family: 'DejaVu Sans', sans-serif;
+    font-weight: 900; font-size: 110px; letter-spacing: 0.04em; z-index: 2; }
+  #endcard { position: absolute; inset: 0; background: #FF7A1A; z-index: 20;
+    display: none; color: #fff; text-align: center; }
+  #endcard h1 { font-family: 'DejaVu Sans', sans-serif; font-weight: 900;
+    font-size: 150px; margin: 800px 0 0; letter-spacing: 0.02em; }
+  #endcard p { font-family: Georgia, serif; font-style: italic;
+    font-size: 54px; margin: 30px 0 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="spot"></div><div id="flash"></div>
+  <div id="endcard"><h1>BEAST EDITS</h1><p>hand made, frame by frame</p></div>
+</div>
+<script>
+const FPS = 30;
+const HOOK = [ // [frame, text, class, size, y] - entrances on kick beats
+  [  0, 'Hand',   'sans',  210, 620],
+  [ 15, 'made',   'serif', 260, 900],
+  [ 30, 'motion', 'sans',  210, 1180],
+];
+const CARDS = [ // [landFrame, title, bg, fg, y]
+  [160, 'PLAN',  '#1d1d22', '#3DD68C', 560],
+  [163, 'BUILD', '#FF7A1A',  '#0A0A0C', 830],
+  [166, 'SHIP',  '#f5f0e8',  '#0A0A0C', 1100],
+];
+const FLASH_AT = 150, FLASH_LEN = 3, SPOT_AT = 150, SPOT_LEN = 10;
+const END_AT = 330;
+
+function pop(f, start) { // 4f up, 3f settle (skills/kinetic-typography)
+  const t = f - start;
+  if (t < 0) return null;
+  if (t < 4) return 1.0 + 0.15 * (t / 4);
+  if (t < 7) return 1.15 - 0.15 * ((t - 4) / 3);
+  return 1.0;
+}
+function clearDynamic() {
+  document.querySelectorAll('.word,.card').forEach(n => n.remove());
+}
+
+window.__setFrame = (f) => {
+  const stage = document.getElementById('stage');
+  document.getElementById('endcard').style.display = f >= END_AT ? 'block' : 'none';
+  document.getElementById('flash').style.opacity =
+    (f >= FLASH_AT && f < FLASH_AT + FLASH_LEN) ? '1' : '0';
+  const spot = document.getElementById('spot');
+  if (f >= SPOT_AT && f < SPOT_AT + SPOT_LEN) {
+    const p = (f - SPOT_AT + 1) / SPOT_LEN;         // spotlight reveal
+    const r = 40 + p * p * 1600;                    // ease-in radius
+    spot.style.display = 'block';
+    spot.style.background =
+      `radial-gradient(circle ${r}px at 540px 830px, transparent ${r}px, #0A0A0C ${r + 2}px)`;
+  } else spot.style.display = 'none';
+  clearDynamic();
+  if (f >= END_AT) return;
+
+  if (f < FLASH_AT) {                          // hook scene
+    for (const [start, text, cls, size, y] of HOOK) {
+      const s = pop(f, start);
+      if (s === null) continue;
+      const el = document.createElement('div');
+      el.className = `word ${cls}`;
+      el.textContent = text;
+      el.style.fontSize = size + 'px';
+      el.style.top = y + 'px';
+      el.style.transform = `scale(${s.toFixed(4)})`;
+      // active (newest) word spends the system accent green; others neutral
+      const isActive = start === Math.max(...HOOK.filter(h => f >= h[0]).map(h => h[0]));
+      el.style.color = cls === 'serif' ? '#FF7A1A'
+        : (isActive && f - start < 15 ? '#3DD68C' : '#f5f0e8');
+      stage.appendChild(el);
+    }
+  }
+  if (f >= FLASH_AT) {                              // cascade scene
+    for (const [land, title, bg, fg, y] of CARDS) {
+      const s = pop(f, land);
+      if (s === null) continue;
+      const el = document.createElement('div');
+      el.className = 'card';
+      el.textContent = title;
+      el.style.background = bg; el.style.color = fg;
+      el.style.top = y + 'px';
+      el.style.transform = `scale(${s.toFixed(4)}) rotate(${(1 - Math.min(s,1)) * -4}deg)`;
+      stage.appendChild(el);
+    }
+  }
+};
+window.__setFrame(0);
+window.__ready = true;
+</script>
+</body>
+</html>

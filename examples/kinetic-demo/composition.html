@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  /* 1080x1920 deterministic composition. All motion derives from window.__frame.
+     Techniques (grounded in docs/reference-analysis/01-metros):
+     two-family type, word pops (4f scale-up + 3f settle), A/B alternation
+     (~15f), 3-frame white flash on the scene cut, 90f end-card hold. */
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden;
+    background: #0e0e10; }
+  #stage { position: relative; width: 1080px; height: 1920px;
+    font-kerning: normal; }
+  .word { position: absolute; left: 0; right: 0; text-align: center;
+    white-space: nowrap; }
+  .serif { font-family: Georgia, 'Times New Roman', serif; font-style: italic; }
+  .sans  { font-family: 'DejaVu Sans', Arial, sans-serif; font-weight: 900;
+    letter-spacing: 0.02em; }
+  #flash { position: absolute; inset: 0; background: #fff; opacity: 0; z-index: 10; }
+  #card { position: absolute; inset: 0; background: #f5f0e8; display: none; z-index: 20;
+    color: #0e0e10; text-align: center; }
+  #card .inner { padding-top: 780px; }
+  #card h1 { font-family: Georgia, serif; font-style: italic; font-size: 96px;
+    margin: 0 0 24px; }
+  #card p { font-family: 'DejaVu Sans', Arial, sans-serif; font-size: 40px;
+    letter-spacing: 0.35em; margin: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="flash"></div>
+  <div id="card"><div class="inner">
+    <h1>In Addition</h1><p>A KINETIC STUDY</p>
+  </div></div>
+</div>
+<script>
+const FPS = 30;
+// Beat sheet (skills/edit-planning): [startFrame, text, class, size, y]
+const SCENE_A = [
+  [  0, 'Some',      'sans',  190, 620],
+  [ 12, 'words',     'serif', 230, 800],
+  [ 24, 'deserve',   'sans',  170, 980],
+  [ 36, 'motion',    'serif', 260, 1180],
+];
+const SCENE_B = [
+  [ 90, 'not',       'serif', 210, 660],
+  [102, 'templates', 'sans',  150, 820],
+  [114, 'but',       'serif', 200, 1020],
+  [126, 'craft',     'sans',  240, 1160],
+];
+const FLASH_AT = 90, FLASH_LEN = 3;   // white flash on the scene cut
+const CARD_AT  = 180;                 // end card, held to frame 240 (90f)
+
+function pop(f, start) {
+  // entrance: 4 frames scale-up, 3 frames settle (skills/kinetic-typography)
+  const t = f - start;
+  if (t < 0) return null;
+  if (t < 4)  return 1.0 + 0.15 * (t / 4);
+  if (t < 7)  return 1.15 - 0.15 * ((t - 4) / 3);
+  return 1.0;
+}
+
+function clearWords() {
+  document.querySelectorAll('.word').forEach(n => n.remove());
+}
+
+window.__setFrame = (f) => {
+  const stage = document.getElementById('stage');
+  document.getElementById('card').style.display = f >= CARD_AT ? 'block' : 'none';
+  document.getElementById('flash').style.opacity =
+    (f >= FLASH_AT && f < FLASH_AT + FLASH_LEN) ? '1' : '0';
+  clearWords();
+  if (f >= CARD_AT) return;
+
+  // A/B alternation: active phrase swaps every ~15 frames inside each scene
+  const scene = f < FLASH_AT ? SCENE_A : SCENE_B;
+  const slot = Math.floor(f / 15) % 2;
+  const visible = scene.filter((_, i) => i % 2 === slot);
+  for (const [start, text, cls, size, y] of visible) {
+    const s = pop(f, start);
+    if (s === null) continue;
+    const el = document.createElement('div');
+    el.className = `word ${cls}`;
+    el.textContent = text;
+    el.style.fontSize = size + 'px';
+    el.style.top = y + 'px';
+    el.style.transform = `scale(${s.toFixed(4)})`;
+    el.style.color = cls === 'serif' ? '#ff7a1a' : '#f5f0e8'; // one accent
+    stage.appendChild(el);
+  }
+};
+window.__setFrame(0);
+window.__ready = true;
+</script>
+</body>
+</html>

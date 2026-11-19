@@ -1,0 +1,13 @@
+{
+  "name": "kinetic-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Code-only kinetic typography demo rendered deterministically frame-by-frame (see skills/deterministic-render).",
+  "type": "module",
+  "scripts": {
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "playwright-core": "^1.49.0"
+  }
+}

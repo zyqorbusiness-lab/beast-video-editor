@@ -1,0 +1,7 @@
+node_modules/
+out/
+*.log
+__pycache__/
+# regenerable build artifacts (make_audio.py / audio_events.py outputs)
+examples/promo-demo/assets/mixed_audio.wav
+*_events.json

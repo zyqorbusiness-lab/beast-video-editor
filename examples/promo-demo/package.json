@@ -1,0 +1,14 @@
+{
+  "name": "promo-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Original end-to-end promo: colour system + motion graphics + word-by-word type + synthesized audio, rendered deterministically.",
+  "type": "module",
+  "scripts": {
+    "audio": "python3 make_audio.py",
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "playwright-core": "^1.49.0"
+  }
+}
