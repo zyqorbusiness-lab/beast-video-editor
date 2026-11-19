@@ -11,7 +11,7 @@ Nothing below is claimed beyond the check listed.
   word gaps, 2-4f flash, >=60f end-card hold, no wall-clock reads),
   python tools compile, no video/audio binaries in the tree, plus the
   2026-11-19 additions below. (Earlier revisions of this file said 24;
-  the first CI run reported 32 - the current suite is 41.)
+  the first CI run reported 32 - the current suite is 55.)
 - **Native-fps extraction** (new): `extract_reference.sh` defaults to the
   source's native fps and writes `extraction_fps.txt`. Dogfooded on all
   five reference reels; extracted PNG counts match `ffprobe` nb_frames
@@ -79,7 +79,7 @@ Nothing below is claimed beyond the check listed.
 
 - Workflow: `.github/workflows/test.yml` runs the 55-check suite plus a
   real demo render smoke test (ffmpeg + chromium render + ffprobe).
-- Run 44499109024 on commit d0772c5: every step green
+- Historical run 44499109024 on commit d0772c5: every step green
   (https://github.com/zyqorbusiness-lab/beast-video-editor/actions/runs/44499109024).
   That run's summary showed Node 20 deprecation annotations from
   `actions/checkout@v4` / `actions/setup-node@v4`; the workflow now uses
@@ -88,7 +88,7 @@ Nothing below is claimed beyond the check listed.
   the first with the updated actions - see the repo's Actions tab.
 - Step-level status above is from the GitHub API job listing; raw
   per-command log lines were not pulled line-by-line for this record.
-- Run 44506077519 on the final tree: RED on a clean runner - the suite's
+- Historical run 44506077519 on the final tree: RED on a clean runner - the suite's
   audio pipeline step aborted (numpy missing) and the two preflight-pass
   checks failed (preflight's python module check found numpy/PIL absent).
   Local runs passed because the dev environment already had these
@@ -100,7 +100,16 @@ Nothing below is claimed beyond the check listed.
   authenticated raw job log of the failing run (same
   ModuleNotFoundError: numpy on the v4-action run 44505727145 too, so
   the cause was the missing runner packages, not the action bump).
-- Run 44510621563 on commit 604436d: GREEN, every step
+- Current run 44513464227 on commit ac3e59d: GREEN, every step
+  (https://github.com/zyqorbusiness-lab/beast-video-editor/actions/runs/44513464227).
+  Authenticated raw job log pulled for this run: 55 PASS / 0 FAIL check
+  lines, the demo render's libx264 options line shows crf=16.0, and the
+  render smoke test's ffprobe check printed stream,1080,1920,240. This
+  run covers the CLI argument-contract checks, the live optional-arg
+  invocations (explicit fps / audio file / 2x3 tile) and the crf 16 demo
+  encode. Its first attempt stalled in the runner's apt-get ffmpeg step
+  and was cancelled; attempt 2 completed green.
+- Historical run 44510621563 on commit 604436d: GREEN, every step
   (https://github.com/zyqorbusiness-lab/beast-video-editor/actions/runs/44510621563).
   The workflow installs the python deps from requirements.txt with the
   runner's preinstalled python3 (no setup-python step was needed;
