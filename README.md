@@ -34,7 +34,7 @@ skill cites its evidence. Per-reel extraction counts and viewing status:
 ## Quick start
 
 ```bash
-# Requirements: ffmpeg, python3, node 18+
+# Requirements: ffmpeg, python3 (+ python3 -m pip install -r requirements.txt), node 18+
 tools/preflight.sh                    # verify your environment (+ asset ledger)
 
 # Study a reference (extraction defaults to the video's native fps)

@@ -85,6 +85,17 @@ Nothing below is claimed beyond the check listed.
   the first with the updated actions - see the repo's Actions tab.
 - Step-level status above is from the GitHub API job listing; raw
   per-command log lines were not pulled line-by-line for this record.
+- Run 44506077519 on the final tree: RED on a clean runner - the suite's
+  audio pipeline step aborted (numpy missing) and the two preflight-pass
+  checks failed (preflight's python module check found numpy/PIL absent).
+  Local runs passed because the dev environment already had these
+  installed; the workflow installed ffmpeg but no python packages. Fix:
+  `requirements.txt` (numpy, pillow, scipy) added at repo root, a
+  setup-python + `pip install -r requirements.txt` step added to the
+  workflow, and scipy added to preflight's module check to match
+  tools/motion_measure.py's actual imports. Diagnosis is from the source
+  and job step listing; the raw failing log needs repo admin rights to
+  download anonymously, so per-line failure text is not quoted here.
 
 ## Not yet verified
 

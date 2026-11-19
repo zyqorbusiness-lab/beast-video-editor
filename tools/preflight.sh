@@ -27,7 +27,7 @@ need node
 python3 - <<'PY' || missing=1
 import sys
 mods = []
-for m in ("numpy", "PIL"):
+for m in ("numpy", "PIL", "scipy"):
     try:
         __import__(m)
         mods.append(m + " ok")
