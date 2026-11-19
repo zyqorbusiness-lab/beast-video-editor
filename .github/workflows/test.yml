@@ -1,0 +1,17 @@
+name: test
+on: [push, pull_request]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: node tests/run-tests.mjs
+      - name: Render demo (visual smoke test)
+        run: |
+          cd examples/kinetic-demo
+          npm install --no-audit --no-fund
+          CHROME_PATH=$(which google-chrome || which chromium) npm run render
+          ffprobe -v error -show_entries stream=width,height,nb_frames -of csv out/kinetic-demo.mp4
