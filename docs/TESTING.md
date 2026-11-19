@@ -91,11 +91,19 @@ Nothing below is claimed beyond the check listed.
   Local runs passed because the dev environment already had these
   installed; the workflow installed ffmpeg but no python packages. Fix:
   `requirements.txt` (numpy, pillow, scipy) added at repo root, a
-  setup-python + `pip install -r requirements.txt` step added to the
+  `pip install -r requirements.txt` step added to the
   workflow, and scipy added to preflight's module check to match
-  tools/motion_measure.py's actual imports. Diagnosis is from the source
-  and job step listing; the raw failing log needs repo admin rights to
-  download anonymously, so per-line failure text is not quoted here.
+  tools/motion_measure.py's actual imports. Diagnosis is from the
+  authenticated raw job log of the failing run (same
+  ModuleNotFoundError: numpy on the v4-action run 44505727145 too, so
+  the cause was the missing runner packages, not the action bump).
+- Run 44510621563 on commit 604436d: GREEN, every step
+  (https://github.com/zyqorbusiness-lab/beast-video-editor/actions/runs/44510621563).
+  The workflow installs the python deps from requirements.txt with the
+  runner's preinstalled python3 (no setup-python step was needed;
+  installed numpy 2.5.5, pillow 13.0.0, scipy 1.18.1). Authenticated raw
+  job log pulled for this run: 41 PASS / 0 FAIL check lines, and the
+  render smoke test's ffprobe check printed stream,1080,1920,240.
 
 ## Not yet verified
 
